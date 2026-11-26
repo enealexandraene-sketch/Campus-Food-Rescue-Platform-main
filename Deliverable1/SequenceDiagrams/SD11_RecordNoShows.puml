@@ -1,0 +1,30 @@
+@startuml SD11_RecordNoShows
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-11 Record no-shows when a pickup window ends (UC-23, exception 4a)
+
+participant ":Scheduler" as sch
+control ":ReservationController" as rc
+entity ":Reservation" as r
+database ":Database" as db
+
+note over sch : Triggered automatically at the end\nof each shop's pickup window
+sch -> rc ++ : closePickupWindow(providerID)
+rc -> db ++ : findReservations(providerID, today, status = UPCOMING)
+return reservations
+
+loop for each uncollected reservation
+  rc -> r ++ : markMissed()
+  note right of r : status = MISSED\n(counts as a no-show, used by UC-24)
+  return
+end
+
+rc -> db ++ : save(reservations)
+return ok
+rc --> sch -- : done
+@enduml

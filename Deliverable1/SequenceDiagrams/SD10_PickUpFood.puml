@@ -1,0 +1,43 @@
+@startuml SD10_PickUpFood
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-10 Pick up food at the counter (UC-22, UC-23)
+
+actor Student as st
+actor Provider as pr
+boundary ":WebApp" as ui
+control ":ReservationController" as rc
+entity ":Provider" as p
+entity ":Reservation" as r
+database ":Database" as db
+
+st -> pr : gives their name / shows the reservation
+pr -> ui ++ : openReservations()
+ui -> rc ++ : viewReservations(providerID)
+rc -> p ++ : viewReservations()
+return reservations
+return reservations
+ui --> pr -- : list of upcoming reservations
+
+alt no matching reservation (3a)
+  pr -> st : doesn't hand out the food
+else reservation found
+  pr -> ui ++ : markCollected(reservationID)
+  ui -> rc ++ : markCollected(providerID, reservationID)
+  rc -> p ++ : markCollected(reservationID)
+  p -> r ++ : markCollected()
+  note right of r : status = COLLECTED
+  return
+  return
+  rc -> db ++ : save(reservation)
+  return ok
+  rc --> ui -- : collected
+  ui --> pr -- : reservation shown as collected
+  pr -> st : hands out the food
+end
+@enduml

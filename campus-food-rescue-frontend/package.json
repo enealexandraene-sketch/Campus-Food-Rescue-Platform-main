@@ -1,0 +1,8 @@
+{
+  "name": "campus-food-rescue-frontend-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {"start": "node demo-server.js", "dev": "node --watch demo-server.js", "check": "node --check demo-server.js && node --check public/js/app.js"},
+  "dependencies": {"ejs": "^3.1.10", "express": "^5.1.0"}
+}

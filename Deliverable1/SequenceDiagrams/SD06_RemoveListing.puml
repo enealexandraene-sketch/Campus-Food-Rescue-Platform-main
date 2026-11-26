@@ -1,0 +1,52 @@
+@startuml SD06_RemoveListing
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-06 Remove a listing, even if it is reserved (UC-21)
+
+actor Provider as pr
+boundary ":WebApp" as ui
+control ":ListingController" as lc
+entity ":Provider" as p
+entity ":Listing" as l
+entity ":Reservation" as r
+database ":Database" as db
+control ":NotificationService" as ns
+
+pr -> ui ++ : removeListing(listingID)
+ui -> lc ++ : countUpcomingReservations(listingID)
+lc -> db ++ : findReservations(listingID, status = UPCOMING)
+return reservations
+lc --> ui -- : count
+
+alt count > 0
+  ui --> pr : warn "n students have reserved this listing.\nTheir reservations will be cancelled."
+else count = 0
+  ui --> pr : ask for confirmation
+end
+
+pr -> ui : confirmRemoval()
+ui -> lc ++ : removeListing(providerID, listingID)
+
+loop for each upcoming reservation
+  lc -> r ++ : cancel()
+  note right of r : status = CANCELLED
+  return
+  lc -> ns ++ : notify(reservation.student, RESERVATION_CANCELLED)
+  return
+end
+
+lc -> p ++ : removeListing(listingID)
+p -> l ++ : remove()
+note right of l : status = REMOVED
+return
+return
+lc -> db ++ : save(listing, reservations)
+return ok
+lc --> ui -- : listingRemoved
+ui --> pr -- : listing disappears from the dashboard
+@enduml

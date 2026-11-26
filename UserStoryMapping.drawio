@@ -1,0 +1,141 @@
+<mxfile host="Electron">
+  <diagram name="Page-1" id="gCz6C3rT3SdJAiy0E2Lw">
+    <mxGraphModel dx="2039" dy="943" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-12" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="USER: Sign up and Login" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-13" edge="1" parent="1" style="endArrow=classic;html=1;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="280" y="100" as="sourcePoint" />
+            <mxPoint x="860" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-14" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#666666;fontSize=8;" value="Priority +++" vertex="1">
+          <mxGeometry height="30" width="70" x="282" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-15" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;fontColor=#666666;fontSize=8;" value="Priority ---" vertex="1">
+          <mxGeometry height="30" width="60" x="711" y="80" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-16" edge="1" parent="1" style="endArrow=none;dashed=1;html=1;dashPattern=1 3;strokeWidth=2;rounded=0;" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="270" y="720" as="sourcePoint" />
+            <mxPoint x="270" y="80" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-18" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="STAFF: Post surplus food" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-19" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Create account/shop account" vertex="1">
+          <mxGeometry height="40" width="140" x="290" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-20" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Manage account (Profile picture, preferences)" vertex="1">
+          <mxGeometry height="40" width="150" x="720" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-21" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Reset password, register with uni credentials" vertex="1">
+          <mxGeometry height="40" width="150" x="520" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-22" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="MVP" vertex="1">
+          <mxGeometry height="30" width="40" x="290" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-23" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Release 2" vertex="1">
+          <mxGeometry height="30" width="60" x="520" y="65" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-24" parent="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;rounded=0;" value="Release 3" vertex="1">
+          <mxGeometry height="20" width="60" x="720" y="70" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-25" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Create listing (item quantity, pickup window), edit/cancel listings" vertex="1">
+          <mxGeometry height="40" width="200" x="290" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-26" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Photo, allergen/dietary preferences tags" vertex="1">
+          <mxGeometry height="40" width="130" x="520" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-27" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Recurring listings (daily, weekly, ...)" vertex="1">
+          <mxGeometry height="40" width="140" x="720" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-28" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="USER: Discover Food" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-29" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Browse available food, view listing details" vertex="1">
+          <mxGeometry height="40" width="140" x="290" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-30" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Filtering (diet, allergens, location, map view)" vertex="1">
+          <mxGeometry height="40" width="150" x="520" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-31" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Favorite shops, available food notifications" vertex="1">
+          <mxGeometry height="40" width="150" x="720" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-32" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="USER: Reserve" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="360" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-33" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Reserve one portion, see confirmation, cancel reservation" vertex="1">
+          <mxGeometry height="40" width="190" x="290" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-36" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="STAFF: Reservation" vertex="1">
+          <mxGeometry height="40" width="150" x="290" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-37" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="(STAFF) Handle no-shows and issues" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-38" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="USER: Provide feedback/ratings" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-39" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="ADMIN: administrate" vertex="1">
+          <mxGeometry height="40" width="150" x="110" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-40" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Approve/close shops accounts" vertex="1">
+          <mxGeometry height="40" width="150" x="290" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-41" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Reservation expires automatically after window" vertex="1">
+          <mxGeometry height="40" width="150" x="290" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-42" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="See reserved portions, mark portion as collected" vertex="1">
+          <mxGeometry height="40" width="180" x="290" y="430" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-43" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Rate the pickup" vertex="1">
+          <mxGeometry height="40" width="150" x="520" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-44" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="Campus wide statistics (meals saved, CO2)" vertex="1">
+          <mxGeometry height="40" width="150" x="720" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-45" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Temporarily suspending users, report issues" vertex="1">
+          <mxGeometry height="40" width="150" x="520" y="520" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-46" parent="1" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" value="Moderate reports" vertex="1">
+          <mxGeometry height="40" width="150" x="520" y="680" as="geometry" />
+        </mxCell>
+        <mxCell id="g-a4V9z4QmbBreEmt5tr-47" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="N/A" vertex="1">
+          <mxGeometry height="40" width="150" x="290" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-4" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="g-a4V9z4QmbBreEmt5tr-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-5" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="g-a4V9z4QmbBreEmt5tr-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-6" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="g-a4V9z4QmbBreEmt5tr-28">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-8" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="g-a4V9z4QmbBreEmt5tr-32">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-1" parent="1" style="whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;" value="USER: Access food" vertex="1">
+          <mxGeometry height="40" width="150" x="-180" y="220" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-10" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" target="g-a4V9z4QmbBreEmt5tr-37">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-11" edge="1" parent="1" source="GI0FuLBoan4aBIMkubDX-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="g-a4V9z4QmbBreEmt5tr-38">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="100" y="620" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="GI0FuLBoan4aBIMkubDX-3" parent="1" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="STAFF: Upload food" vertex="1">
+          <mxGeometry height="40" width="150" x="-190" y="480" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

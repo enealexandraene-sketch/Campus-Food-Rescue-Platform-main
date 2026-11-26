@@ -1,0 +1,58 @@
+@startuml UseCaseStudent
+left to right direction
+actor Student as st
+actor Provider as pr
+actor Maintainer as mt
+
+rectangle "Campus Food Rescue Platform" {
+  ' Account
+  usecase "Register account" as UC_register
+  usecase "Log in" as UC_login
+  usecase "Reset password" as UC_reset
+
+  ' Discover food
+  usecase "Browse available food" as UC_browse
+  usecase "View listing details" as UC_details
+  usecase "Filter listings\n(allergens, distance, time)" as UC_filter
+  usecase "View providers on map" as UC_map
+  usecase "Manage favorite providers" as UC_fav
+
+  ' Reserve & pick up
+  usecase "Reserve a listing" as UC_reserve
+  usecase "View my reservations" as UC_myres
+  usecase "Cancel reservation" as UC_cancel
+  usecase "Receive notifications" as UC_notif
+
+  ' Feedback
+  usecase "Contact provider" as UC_contact
+  usecase "Report an issue" as UC_report
+}
+
+' Student (primary actor)
+st -- UC_register
+st -- UC_login
+st -- UC_browse
+st -- UC_fav
+st -- UC_reserve
+st -- UC_myres
+st -- UC_notif
+st -- UC_contact
+st -- UC_report
+
+' Secondary actors (right side of the system)
+UC_reserve -- pr
+UC_cancel -- pr
+UC_contact -- pr
+UC_report -- mt
+
+' <<include>>: always part of the base use case
+UC_reserve ..> UC_details : <<include>>
+
+' <<extend>>: optional behaviour, arrow points to the base use case
+UC_reset ..> UC_login : <<extend>>
+UC_details ..> UC_browse : <<extend>>
+UC_filter ..> UC_browse : <<extend>>
+UC_map ..> UC_browse : <<extend>>
+UC_cancel ..> UC_myres : <<extend>>
+
+@enduml

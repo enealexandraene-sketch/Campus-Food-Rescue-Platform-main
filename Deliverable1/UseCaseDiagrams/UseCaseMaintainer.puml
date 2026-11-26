@@ -1,0 +1,26 @@
+@startuml UseCaseMaintainer
+left to right direction
+actor Maintainer as mt
+actor Provider as pr
+actor Student as stu
+
+rectangle "Campus Food Rescue Platform" {
+  ' Account
+  usecase "Log in" as UC_login
+
+  ' Provider management
+  usecase "Approve or reject provider registration" as UC_approve
+  usecase "Delete a provider" as UC_delete
+}
+
+' Maintainer (primary actor)
+mt -- UC_login
+mt -- UC_approve
+mt -- UC_delete
+
+' Secondary actors (right side of the system)
+UC_approve -- pr
+UC_delete -- pr
+UC_delete -- stu
+
+@enduml

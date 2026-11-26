@@ -1,0 +1,44 @@
+@startuml SD05_CreateInvisibleListing
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-05 Create an invisible listing and publish it later (UC-19)
+
+actor Provider as pr
+boundary ":WebApp" as ui
+control ":ListingController" as lc
+entity ":Provider" as p
+database ":Database" as db
+control ":NotificationService" as ns
+
+== Prepare the listing ==
+pr -> ui ++ : submitListing(foodName, description, allergens, quantity, isVisible = false)
+ui -> lc ++ : createListing(providerID, data)
+lc -> p ++ : createListing(foodName, description, allergens, quantity, isVisible = false)
+create entity ":Listing" as l
+p -> l : <<create>>
+return listing
+lc -> db ++ : save(listing)
+return ok
+note right of lc : No notification is sent:\nstudents can't see the listing yet.
+lc --> ui -- : listingSaved
+ui --> pr -- : "Saved as hidden"
+
+== Later: the provider publishes it ==
+pr -> ui ++ : toggleVisibility(listingID)
+ui -> lc ++ : setVisibility(providerID, listingID, true)
+lc -> p ++ : setListingVisibility(listingID, true)
+p -> l ++ : setVisibility(true)
+return
+return
+lc -> db ++ : save(listing)
+return ok
+lc -> ns ++ : notifyFavoriteFollowers(provider, listing)
+return
+lc --> ui -- : listingPublished
+ui --> pr -- : "Your listing is live"
+@enduml

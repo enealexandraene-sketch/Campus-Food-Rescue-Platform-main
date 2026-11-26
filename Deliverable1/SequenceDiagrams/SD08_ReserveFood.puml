@@ -1,0 +1,48 @@
+@startuml SD08_ReserveFood
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-08 Reserve food (UC-8)
+
+actor Student as st
+boundary ":WebApp" as ui
+control ":ReservationController" as rc
+entity ":Student" as s
+entity ":Listing" as l
+entity ":Provider" as p
+database ":Database" as db
+control ":NotificationService" as ns
+
+st -> ui ++ : reserve(listingID)
+ui -> rc ++ : reserve(studentID, listingID)
+rc -> db ++ : findStudentAndListing(studentID, listingID)
+return student, listing
+rc -> s ++ : isRestricted()
+return false
+rc -> l ++ : isPickupWindowOver()
+return false
+rc -> db ++ : countReservationsToday(studentID, providerID)
+return count
+rc -> p ++ : getDailyPickupLimit()
+return limit
+note right of rc : count < limit\n(refusals: UC-8, exceptions 3a-3d)
+
+group one database transaction (NFR-3)
+  rc -> l ++ : hasPortionsLeft()
+  return true
+  create entity ":Reservation" as r
+  rc -> r : <<create>> Reservation(student, listing, status = UPCOMING)
+  rc -> db ++ : save(reservation)
+  return ok
+end
+note right of r : remainingPortions is derived from the\nreservations, so it drops by one.\nTwo students can't take the last portion.
+
+rc -> ns ++ : notify(provider, NEW_RESERVATION)
+return
+rc --> ui -- : reservation, pickupWindow, address
+ui --> st -- : confirmation with the pickup window and address
+@enduml

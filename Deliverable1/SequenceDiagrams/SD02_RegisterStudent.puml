@@ -1,0 +1,54 @@
+@startuml SD02_RegisterStudent
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-02 Register a student account (UC-1)
+
+actor Student as st
+boundary ":WebApp" as ui
+control ":AccountController" as ac
+database ":Database" as db
+participant ":EmailService" as mail
+
+st -> ui ++ : submitRegistration(name, universityEmail, password)
+ui -> ac ++ : registerStudent(name, email, password)
+ac -> db ++ : findAccountByEmail(email)
+
+alt email already in use
+  db --> ac -- : existingUser
+  ac --> ui : error("Email already registered")
+  ui --> st : show error and link to the login page
+else new email
+  db --> ac : null
+  create entity ":Student" as s
+  ac -> s : <<create>> Student(name, email, hash(password), emailVerified = false)
+  ac -> db ++ : save(student)
+  return ok
+  ac -> mail ++ : sendVerificationLink(email, token)
+  return
+  ac --> ui -- : accountCreated
+  ui --> st -- : "Check your email to activate your account"
+end
+
+== Email verification ==
+st -> ui ++ : openVerificationLink(token)
+ui -> ac ++ : verifyEmail(token)
+ac -> db ++ : findStudentByToken(token)
+return student
+
+alt token valid
+  ac -> s ++ : verifyEmail()
+  return
+  ac -> db ++ : save(student)
+  return ok
+  ac --> ui : accountActivated
+  ui --> st : "Your account is active, you can log in"
+else token expired
+  ac --> ui -- : error("Link expired")
+  ui --> st -- : offer to send a new link
+end
+@enduml

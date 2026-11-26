@@ -1,0 +1,49 @@
+@startuml SD09_CancelReservation
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-09 Cancel a reservation (UC-9, UC-10)
+
+actor Student as st
+boundary ":WebApp" as ui
+control ":ReservationController" as rc
+entity ":Reservation" as r
+database ":Database" as db
+control ":NotificationService" as ns
+
+st -> ui ++ : openMyReservations()
+ui -> rc ++ : getReservations(studentID)
+rc -> db ++ : findReservations(studentID)
+return reservations
+return reservations
+ui --> st -- : list with status and pickup details
+
+st -> ui ++ : cancel(reservationID)
+ui -> rc ++ : cancelReservation(studentID, reservationID)
+rc -> db ++ : findReservation(reservationID)
+return reservation
+
+alt pickup window has ended (1a)
+  rc --> ui : refused("Too late to cancel")
+  ui --> st : "This reservation can no longer be cancelled"
+else window not ended
+  opt pickup window has already started (3a)
+    rc --> ui : warning("Pickup has started")
+    ui --> st : ask to confirm anyway
+    st -> ui : confirm()
+  end
+  rc -> r ++ : cancel()
+  note right of r : status = CANCELLED\nThe listing's remainingPortions\ngoes back up by one (derived).
+  return
+  rc -> db ++ : save(reservation)
+  return ok
+  rc -> ns ++ : notify(provider, RESERVATION_CANCELLED)
+  return
+  rc --> ui -- : cancelled
+  ui --> st -- : "Reservation cancelled"
+end
+@enduml

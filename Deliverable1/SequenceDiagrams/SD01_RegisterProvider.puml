@@ -1,0 +1,70 @@
+@startuml SD01_RegisterProvider
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-01 Register a shop and get it approved (UC-15, UC-25)
+
+actor Provider as pr
+boundary ":WebApp" as ui
+control ":AccountController" as ac
+database ":Database" as db
+participant ":EmailService" as mail
+actor Maintainer as mt
+
+== Registration request (UC-15) ==
+pr -> ui ++ : submitShopRegistration(shopName, address, contactInfo, email, password)
+ui -> ac ++ : registerShop(details)
+ac -> db ++ : findAccountByEmail(email)
+return result
+
+alt email already in use
+  ac --> ui : error("Email already in use")
+  ui --> pr : show error
+else details incomplete
+  ac --> ui : error(missingFields)
+  ui --> pr : ask to complete the missing fields
+else details valid
+  create entity ":Provider" as p
+  ac -> p : <<create>> Provider(details, status = PENDING)
+  ac -> db ++ : save(provider)
+  return ok
+  ac -> mail ++ : notifyMaintainers("New shop registration")
+  return
+  ac --> ui -- : requestSubmitted
+  ui --> pr -- : "Your request is waiting for approval"
+end
+
+== Approval by a maintainer (UC-25) ==
+mt -> ui ++ : openPendingRegistrations()
+ui -> ac ++ : getPendingProviders()
+ac -> db ++ : findProviders(status = PENDING)
+return providers
+return providers
+ui --> mt -- : list of pending shops
+
+mt -> ui ++ : decide(provider, decision, reason)
+ui -> ac ++ : decide(providerID, decision, reason)
+
+alt approved
+  ac -> p ++ : setStatus(APPROVED)
+  return
+  ac -> db ++ : save(provider)
+  return ok
+  ac -> mail ++ : send(provider.email, "Your shop is approved")
+  return
+else rejected
+  ac -> p ++ : setStatus(REJECTED)
+  return
+  ac -> db ++ : save(provider)
+  return ok
+  ac -> mail ++ : send(provider.email, "Registration rejected: " + reason)
+  return
+end
+
+ac --> ui -- : done
+ui --> mt -- : decision saved
+@enduml

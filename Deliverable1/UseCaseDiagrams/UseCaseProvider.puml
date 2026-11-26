@@ -1,0 +1,54 @@
+@startuml UseCaseProvider
+left to right direction
+actor Provider as pr
+actor Maintainer as mt
+actor Student as stu
+
+rectangle "Campus Food Rescue Platform" {
+  ' Account & shop
+  usecase "Register shop" as UC_regshop
+  usecase "Log in" as UC_login
+  usecase "Reset password" as UC_reset
+  usecase "Set shop details\n(location, pickup window, contact)" as UC_shop
+
+  ' Listings
+  usecase "Upload a listing" as UC_upload
+  usecase "Specify item quantity" as UC_qty
+  usecase "Create an invisible listing" as UC_hidden
+  usecase "Update a listing" as UC_update
+  usecase "Remove a listing" as UC_remove
+  usecase "View listings and reservations" as UC_view
+
+  ' Pickups
+  usecase "Mark portion as collected" as UC_collect
+  usecase "Restrict a no-show student" as UC_ban
+
+  ' Feedback
+  usecase "Report an issue" as UC_report
+}
+
+' Provider (primary actor)
+pr -- UC_regshop
+pr -- UC_login
+pr -- UC_shop
+pr -- UC_upload
+pr -- UC_update
+pr -- UC_remove
+pr -- UC_view
+pr -- UC_ban
+pr -- UC_report
+
+' Secondary actors (right side of the system)
+UC_regshop -- mt
+UC_report -- mt
+UC_remove -- stu
+
+' <<include>>: always part of the base use case
+UC_upload ..> UC_qty : <<include>>
+
+' <<extend>>: optional behaviour, arrow points to the base use case
+UC_reset ..> UC_login : <<extend>>
+UC_hidden ..> UC_upload : <<extend>>
+UC_collect ..> UC_view : <<extend>>
+
+@enduml

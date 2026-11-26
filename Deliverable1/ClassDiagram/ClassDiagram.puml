@@ -1,0 +1,173 @@
+@startuml ClassDiagram
+skinparam classAttributeIconSize 0
+skinparam shadowing false
+skinparam defaultFontName Arial
+hide empty members
+
+' ---------- Enumerations ----------
+enum ProviderStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  REMOVED
+}
+enum ListingStatus {
+  ACTIVE
+  REMOVED
+}
+enum ReservationStatus {
+  UPCOMING
+  COLLECTED
+  CANCELLED
+  MISSED
+}
+enum IssueStatus {
+  OPEN
+  RESOLVED
+}
+enum NotificationType {
+  NEW_FAVORITE_LISTING
+  NEW_RESERVATION
+  RESERVATION_CANCELLED
+  PICKUP_REMINDER
+}
+enum Allergen {
+  GLUTEN
+  CRUSTACEANS
+  EGGS
+  FISH
+  PEANUTS
+  SOY
+  MILK
+  TREE_NUTS
+  CELERY
+  MUSTARD
+  SESAME
+  SULPHITES
+  LUPIN
+  MOLLUSCS
+}
+
+' ---------- Accounts ----------
+abstract class Account {
+  -accountID: int
+  -name: String
+  -email: String
+  -passwordHash: String
+  -failedLoginAttempts: int
+
+  +authenticate(password): boolean
+  +registerFailedLogin(): void
+  +resetFailedLogins(): void
+  +reportIssue(description): IssueReport
+}
+
+class Student {
+  -emailVerified: boolean
+  -restricted: boolean
+
+  +verifyEmail(): void
+  +isRestricted(): boolean
+  +browseListings(): List<Listing>
+  +reserve(listingID): Reservation
+  +cancelReservation(reservationID): void
+  +addFavorite(providerID): void
+  +removeFavorite(providerID): void
+}
+
+class Provider {
+  -shopName: String
+  -address: String
+  -latitude: double
+  -longitude: double
+  -contactInfo: String
+  -pickupStart: Time
+  -pickupEnd: Time
+  -dailyPickupLimit: int
+  -status: ProviderStatus
+
+  +setStatus(status): void
+  +setShopDetails(address, contactInfo, pickupStart, pickupEnd, dailyPickupLimit): void
+  +getDailyPickupLimit(): int
+  +createListing(foodName, description, allergens, quantity, isVisible): Listing
+  +removeListing(listingID): void
+  +setListingVisibility(listingID, isVisible): void
+  +viewReservations(): List<Reservation>
+  +markCollected(reservationID): void
+  +restrictStudent(studentID): void
+}
+
+class Maintainer {
+  +approveProvider(providerID): void
+  +rejectProvider(providerID, reason): void
+  +deleteProvider(providerID): void
+  +resolveReport(reportID): void
+}
+
+' ---------- Food and reservations ----------
+class Listing {
+  -listingID: int
+  -foodName: String
+  -description: String
+  -allergens: Allergen [1..*]
+  -photoURL: String [0..1]
+  -quantity: int
+  -isVisible: boolean
+  -status: ListingStatus
+  -createdAt: DateTime
+  -/remainingPortions: int
+
+  +hasPortionsLeft(): boolean
+  +isPickupWindowOver(): boolean
+  +setVisibility(isVisible): void
+  +remove(): void
+}
+
+class Reservation {
+  -reservationID: int
+  -reservedAt: DateTime
+  -status: ReservationStatus
+
+  +cancel(): void
+  +markCollected(): void
+  +markMissed(): void
+}
+
+' ---------- Communication ----------
+class Notification {
+  -notificationID: int
+  -type: NotificationType
+  -message: String
+  -sentAt: DateTime
+  -isRead: boolean
+}
+
+class IssueReport {
+  -reportID: int
+  -description: String
+  -createdAt: DateTime
+  -status: IssueStatus
+
+  +resolve(): void
+}
+
+' ---------- Relationships ----------
+Account <|-- Student
+Account <|-- Provider
+Account <|-- Maintainer
+
+Student "0..*" -- "0..*" Provider : favorites >
+Provider "1" -- "0..*" Listing : offers >
+Student "1" -- "0..*" Reservation : makes >
+Listing "1" -u- "0..*" Reservation : is reserved in >
+Maintainer "0..1" -- "0..*" Provider : approves >
+Account "1" -- "0..*" Notification : receives >
+Account "1" -- "0..*" IssueReport : files >
+Maintainer "0..1" -- "0..*" IssueReport : resolves >
+
+note right of Listing
+  remainingPortions = quantity minus the
+  reservations that are UPCOMING or COLLECTED.
+  The pickup window comes from the Provider.
+end note
+@enduml

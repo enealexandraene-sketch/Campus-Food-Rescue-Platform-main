@@ -1,0 +1,46 @@
+@startuml SD04_CreateListing
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-04 Create a listing (UC-17, UC-18)
+
+actor Provider as pr
+boundary ":WebApp" as ui
+control ":ListingController" as lc
+entity ":Provider" as p
+database ":Database" as db
+control ":NotificationService" as ns
+
+pr -> ui ++ : submitListing(foodName, description, allergens, quantity, isVisible = true)
+ui -> lc ++ : createListing(providerID, data)
+
+alt required field missing (no allergens, no quantity, ...)
+  lc --> ui : error(missingFields)
+  ui --> pr : ask to complete the listing
+else data valid
+  lc -> p ++ : createListing(foodName, description, allergens, quantity, isVisible = true)
+  create entity ":Listing" as l
+  p -> l : <<create>>
+  note right of l : status = ACTIVE\nremainingPortions = quantity\npickup window = the provider's
+  return listing
+  lc -> db ++ : save(listing)
+  return ok
+
+  lc -> ns ++ : notifyFavoriteFollowers(provider, listing)
+  ns -> db ++ : findStudentsWithFavorite(provider)
+  return students
+  loop for each student
+    create entity ":Notification" as n
+    ns -> n : <<create>> (NEW_FAVORITE_LISTING)
+    ns -> ns : sendPush(student, notification)
+  end
+  return
+
+  lc --> ui -- : listingPublished
+  ui --> pr -- : "Your listing is live"
+end
+@enduml

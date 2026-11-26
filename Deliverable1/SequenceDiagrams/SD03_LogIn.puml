@@ -1,0 +1,46 @@
+@startuml SD03_LogIn
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-03 Log in (UC-2), shared by students, providers and maintainers
+
+actor User as u
+boundary ":WebApp" as ui
+control ":AccountController" as ac
+database ":Database" as db
+entity ":Account" as acc
+
+u -> ui ++ : logIn(email, password)
+ui -> ac ++ : logIn(email, password)
+ac -> db ++ : findAccountByEmail(email)
+return account
+
+alt no account, or account locked / not activated / not approved
+  ac --> ui : error("Cannot log in")
+  ui --> u : show error
+else account usable
+  ac -> acc ++ : authenticate(password)
+  return result
+
+  alt password correct
+    ac -> acc ++ : resetFailedLogins()
+    return
+    ac -> db ++ : createSession(account)
+    return session
+    ac --> ui : session, role
+    ui --> u : show the page of the role\n(food feed, shop dashboard or admin page)
+  else password wrong
+    ac -> acc ++ : registerFailedLogin()
+    note right of acc : locks the account for a while\nafter too many failed attempts
+    return
+    ac -> db ++ : save(account)
+    return ok
+    ac --> ui -- : error("Wrong email or password")
+    ui --> u -- : show error and "Forgot password?" link
+  end
+end
+@enduml

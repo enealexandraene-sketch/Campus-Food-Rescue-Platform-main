@@ -1,0 +1,56 @@
+@startuml SD07_ViewFood
+skinparam style strictuml
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam sequenceMessageAlign left
+skinparam sequenceGroupBodyBackgroundColor transparent
+hide footbox
+autonumber
+title SD-07 Browse, filter and view available food (UC-4, UC-6, UC-7)
+
+actor Student as st
+boundary ":WebApp" as ui
+control ":ListingController" as lc
+database ":Database" as db
+
+== Browse (UC-4) ==
+st -> ui ++ : openFeed()
+ui -> lc ++ : getAvailableListings(studentID, filters = none)
+lc -> db ++ : findListings(visible, remainingPortions > 0,\npickup window not passed)
+return listings
+lc -> db ++ : findFavorites(studentID)
+return favoriteProviders
+lc -> lc : sort(favorites first, then newest)
+return listings
+
+alt no listing available
+  ui --> st : "No food available right now"
+else listings found
+  ui --> st : show the feed
+end
+deactivate ui
+
+== Filter (UC-6, optional) ==
+opt student applies filters
+  st -> ui ++ : applyFilters(allergensToAvoid, maxDistance, pickupTime)
+  ui -> lc ++ : getAvailableListings(studentID, filters)
+  lc -> db ++ : findListings(..., without allergens, within distance, matching time)
+  return listings
+  return listings
+  ui --> st -- : show matching listings, or "Try loosening your filters"
+end
+
+== View details (UC-7) ==
+st -> ui ++ : selectListing(listingID)
+ui -> lc ++ : getListingDetails(listingID)
+lc -> db ++ : findListing(listingID)
+return listing
+
+alt listing removed or fully reserved meanwhile
+  lc --> ui : error("No longer available")
+  ui --> st : message and back to the feed
+else available
+  lc --> ui -- : food, allergens, portions left,\npickup window and location, provider
+  ui --> st -- : show the details and the "Reserve" button
+end
+@enduml
